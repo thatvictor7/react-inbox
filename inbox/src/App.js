@@ -15,6 +15,21 @@ class App extends Component {
     }
   }
 
+  starToggle = () => {
+    // console.log('heyyy');
+  }
+
+  fetching = () => {
+    fetch('http://localhost:8082/api/messages', {
+      method: "PATCH",
+      body: JSON.strigify(),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+  }
+
+
   componentDidMount() {
     fetch('http://localhost:8082/api/messages')
     .then(res => res.json())
@@ -29,8 +44,7 @@ class App extends Component {
     return (
       <div>
         <Toolbar />
-        {/* <NewMessage /> */}
-        <MessageList  messages={this.state.apiMessages}/>
+        <MessageList  messages={this.state.apiMessages} starToggle={this.starToggle}/>
       </div>
     )
   }

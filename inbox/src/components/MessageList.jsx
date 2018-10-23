@@ -1,9 +1,9 @@
 import React from 'react'
 import Message from './Message'
 
-const MessageList = (props) => (
+const MessageList = ({messages, starToggle}) => (
     <div>
-        {props.messages.map(message => <Message sub={message}/>)}
+        {messages.map(message => <Message sub={message} starToggle={starToggle}/>)}
     </div>
 
 )
