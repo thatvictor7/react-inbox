@@ -6,6 +6,9 @@ const MessageList = ({messages, starToggle}) => {
     return <Message sub={message}
                     starred={message.starred}
                     selected={message.selected}
+                    labels={message.labels}
+                    id={message.id}
+                    starToggle={starToggle}
                     read={message.read}/>
   })
   return (

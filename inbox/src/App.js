@@ -16,14 +16,20 @@ class App extends Component {
   }
 
 
-  fetching = (data) => {
+  starToggle = (messageId) => {
     fetch('http://localhost:8082/api/messages', {
       method: "PATCH",
-      body: JSON.strigify(data),
       headers: {
         "Content-Type": "application/json"
-      }
-    }).then(function(response)  {console.log(response)})
+      },
+      body: JSON.stringify({
+        messageIds: [messageId],
+        command: 'start'
+      })
+    }).then(res => res.json())
+    .then(data => {
+      console.log(data)
+    })
   }
 
 
@@ -43,7 +49,8 @@ class App extends Component {
     return (
       <div>
         <Toolbar />
-        <MessageList  messages={this.state.apiMessages} starToggle={this.starToggle}/>
+        <MessageList  messages={this.state.apiMessages}
+                      starToggle={this.starToggle}/>
       </div>
     )
   }
