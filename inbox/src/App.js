@@ -15,25 +15,24 @@ class App extends Component {
     }
   }
 
-  starToggle = () => {
-    // console.log('heyyy');
-  }
 
-  fetching = () => {
+  fetching = (data) => {
     fetch('http://localhost:8082/api/messages', {
       method: "PATCH",
-      body: JSON.strigify(),
+      body: JSON.strigify(data),
       headers: {
         "Content-Type": "application/json"
       }
-    })
+    }).then(function(response)  {console.log(response)})
   }
 
 
   componentDidMount() {
     fetch('http://localhost:8082/api/messages')
     .then(res => res.json())
-    .then(data => this.displayMessages(data))
+    .then(data => {
+      console.log(data)
+      this.displayMessages(data)})
   }
 
   displayMessages = (input) => {
