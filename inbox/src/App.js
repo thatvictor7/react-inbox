@@ -24,11 +24,13 @@ class App extends Component {
       },
       body: JSON.stringify({
         messageIds: [messageId],
-        command: 'start'
+        command: 'star'
       })
     }).then(res => res.json())
     .then(data => {
-      console.log(data)
+      this.setState({
+        apiMessages: data
+      })
     })
   }
 
