@@ -28,6 +28,26 @@ class App extends Component {
       })
     }).then(res => res.json())
     .then(data => {
+      console.log(data, messageId);
+      this.setState({
+        apiMessages: data
+      })
+    })
+  }
+
+  selectToggle = (input) => {
+    fetch('http://localhost:8082/api/messages', {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        messageIds: [input],
+        command: 'select'
+      })
+    }).then(res => res.json())
+    .then(data => {
+      console.log(data);
       this.setState({
         apiMessages: data
       })
@@ -39,8 +59,11 @@ class App extends Component {
     fetch('http://localhost:8082/api/messages')
     .then(res => res.json())
     .then(data => {
-      console.log(data)
-      this.displayMessages(data)})
+      // console.log(data)
+      this.displayMessages(data)
+      // this.areSelected(data)
+    }
+    )
   }
 
   displayMessages = (input) => {
@@ -52,10 +75,11 @@ class App extends Component {
       <div>
         <Toolbar />
         <MessageList  messages={this.state.apiMessages}
-                      starToggle={this.starToggle}/>
+                      starToggle={this.starToggle}
+                      selectToggle={this.selectToggle}/>
       </div>
     )
   }
 }
 
-export default App;
+export default App
