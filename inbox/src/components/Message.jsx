@@ -2,7 +2,7 @@ import React from 'react'
 
 
 
-const Message = ({sub, starred, read, selected, labels,starToggle, id, selectToggle}) => {
+const Message = ({sub, starred, read, selected, labels,starToggle, id, selectToggle, toggle}) => {
   const starredClasses = starred ? "star fa fa-star" : "star fa fa-star-o"
   const messageRead = read ? " read" : " unread"
   const selectedClass = selected ? " selected" : ""

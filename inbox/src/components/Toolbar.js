@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Toolbar = () => {
+const Toolbar = ({select}) => {
 
     return (
         <div className="App">
@@ -18,7 +18,7 @@ const Toolbar = () => {
                         <i class="fa fa-check-square-o"></i>
                     </button>
 
-                    <button class="btn btn-default">
+                    <button  onClick={() => select()} class="btn btn-default">
                     Mark As Read
                     </button>
 

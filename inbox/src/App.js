@@ -11,10 +11,30 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      apiMessages: []
+      apiMessages: [],
+      selected: []
     }
   }
 
+  markRead = (input) => {
+    fetch('http://localhost:8082/api/messages', {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        messageIds: [input],
+        command: 'read'
+      })
+    }).then(res => res.json())
+    .then(data => {
+      // console.log(input, command);
+      this.setState({
+        apiMessages: data
+      })
+      console.log(data);
+    })
+  }
 
   starToggle = (messageId) => {
     fetch('http://localhost:8082/api/messages', {
@@ -47,21 +67,35 @@ class App extends Component {
       })
     }).then(res => res.json())
     .then(data => {
-      console.log(data);
       this.setState({
         apiMessages: data
       })
     })
   }
 
+  select = () => {
+    this.isSelected()
+    this.state.selected.map(id => {
+      this.markRead(id)
+    })
+  }
+
+  isSelected = () => {
+    this.state.apiMessages.map(message => {
+      if (message.selected) {
+        this.setState({ selected: this.state.selected.push(message.id) })
+      }
+    })
+    console.log(this.state.selected);
+  }
+
+
 
   componentDidMount() {
     fetch('http://localhost:8082/api/messages')
     .then(res => res.json())
     .then(data => {
-      // console.log(data)
       this.displayMessages(data)
-      // this.areSelected(data)
     }
     )
   }
@@ -73,9 +107,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Toolbar />
+        <Toolbar select={this.select}/>
         <MessageList  messages={this.state.apiMessages}
                       starToggle={this.starToggle}
+                      toggle={this.toggle}
                       selectToggle={this.selectToggle}/>
       </div>
     )
